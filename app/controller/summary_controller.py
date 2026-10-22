@@ -1,3 +1,8 @@
+"""Summary Controller Module.
+
+Exposes authenticated endpoints for text summarization via LLM providers.
+"""
+
 from fastapi import APIRouter, Security
 from fastapi.security import APIKeyHeader
 from app.config.settings import settings
@@ -19,9 +24,18 @@ api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 )
 async def post_summary(
     payload: SummaryRequest, x_api_key: str = Security(api_key_header)
-):
-    if not x_api_key or x_api_key != settings.API_KEY:
-        raise AppException(401, "Invalid or missing X-API-Key header.")
+) -> dict:
+  """Generate a concise LLM summary for the provided input text.
 
-    summary_text = await generate_llm_summary(payload.text)
-    return {"summary": summary_text}
+  Args:
+      payload (SummaryRequest): Request body containing text to summarize.
+      x_api_key (str): Header containing the secure API key.
+
+  Returns:
+      dict: Generated summary text.
+  """
+  if not x_api_key or x_api_key != settings.API_KEY:
+    raise AppException(401, "Invalid or missing X-API-Key header.")
+
+  summary_text = await generate_llm_summary(payload.text)
+  return {"summary": summary_text}
