@@ -18,7 +18,7 @@ def trigger_unhandled():
     raise RuntimeError("Unexpected failure")
 
 
-client = TestClient(app)
+client = TestClient(app, raise_server_exceptions=False)
 
 
 def test_app_exception_handler():
