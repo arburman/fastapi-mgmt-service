@@ -10,15 +10,13 @@ from app.service.error_handlers.summary_error_handler import (
 )
 
 
-@mock.patch("app.exception.summary_error_handler.settings")
-def test_validate_summary_too_long(mock_settings):
+def test_validate_summary_too_long():
     """Test validation exception when text exceeds max length."""
-    mock_settings.MAX_SUMMARY_LENGTH = 10
-
-    with pytest.raises(AppException) as exc_info:
-        validate_summary_payload("This text is way too long for the limit.")
-    assert exc_info.value.status_code == 400
-    assert "exceeds maximum limit" in exc_info.value.message
+    with mock.patch.object(settings, "MAX_SUMMARY_LENGTH", 10):
+        with pytest.raises(AppException) as exc_info:
+            validate_summary_payload("This text is way too long for the limit.")
+        assert exc_info.value.status_code == 400
+        assert "exceeds maximum limit" in exc_info.value.message
 
 
 def test_handle_summary_provider_error():
