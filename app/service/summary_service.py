@@ -23,9 +23,9 @@ async def generate_llm_summary(text: str) -> str:
   validate_summary_payload(text)
 
   try:
-    client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+    client = openai.OpenAI(base_url="http://localhost:11434/v1", api_key=settings.OPENAI_API_KEY)
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="phi",
         messages=[
             {
                 "role": "system",
