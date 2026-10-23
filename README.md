@@ -16,6 +16,7 @@ Production-grade FastAPI microservice built with clean separation of concerns, s
 ## Running the Application
 
 ### Environment Variables
+Create `.env` file in project root. This project is configured to use `.env.dev`, `.env.test`, `.env.prod`
 ```bash
 API_KEY=
 MAX_SUMMARY_LENGTH=
@@ -29,6 +30,11 @@ WEATHER_API_KEY=
 ```bash
 python -m venv venv
 venv\Scripts\activate
+```
+
+### Install Dependencies
+```bash
+pip install -r requirements.txt
 ```
 
 ### Development (Default)
