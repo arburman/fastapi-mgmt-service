@@ -9,15 +9,6 @@ from app.service.weather_service import fetch_weather_data
 
 router = APIRouter(prefix="", tags=["Weather"])
 
-"""Fetch current weather details for a specified city.
-
-  Args:
-      city (str): Name of the target city.
-
-  Returns:
-      dict: Weather details containing city name, temperature, condition, and
-      humidity.
-  """
 @router.get(
     "/weather",
     response_model=WeatherResponse,
@@ -27,4 +18,13 @@ router = APIRouter(prefix="", tags=["Weather"])
     },
 )
 async def get_weather(city: str = Query(..., description="Name of the city")):
+    """Fetch current weather details for a specified city.
+
+    Args:
+        city (str): Name of the target city.
+
+    Returns:
+        dict: Weather details containing city name, temperature, condition, and
+        humidity.
+    """
     return await fetch_weather_data(city)

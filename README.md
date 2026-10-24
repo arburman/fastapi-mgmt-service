@@ -4,6 +4,14 @@ Production-grade FastAPI microservice built with clean separation of concerns, s
 
 ## Python Version: `3.15.1`
 
+***This project works with Ollama***
+
+- Make sure you have ollama running in your local.
+- Set the following env variables
+    - OLLAMA_BASE_URL=`http://localhost:11434/v1`
+    - OPENAI_API_KEY=`ollama`
+- Then hit the `/summary` API
+
 ## Project Structure
 - `app/config/`: Dynamic environment-based settings
 - `app/controller/`: API routers / endpoints
@@ -13,9 +21,8 @@ Production-grade FastAPI microservice built with clean separation of concerns, s
 - `app/utils/`: Logging and utilities
 - `app/tests/`: Unit tests
 
-## Running the Application
 
-### Environment Variables
+## Environment Variables
 Create `.env` file in project root. This project is configured to use `.env.dev`, `.env.test`, `.env.prod`
 ```bash
 API_KEY=
@@ -26,13 +33,13 @@ OPENAI_MODEL_SEMVER=
 WEATHER_API_KEY=
 ```
 
-### Virtual Environment
+## Virtual Environment
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### Install Dependencies
+## Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
@@ -51,3 +58,33 @@ ENVIRONMENT=test uvicorn app.main:app --reload
 ```bash
 ENVIRONMENT=prod uvicorn app.main:app --reload
 ```
+
+## API cURL
+
+***Weather API***
+```bash
+curl --location 'http://localhost:8000/weather?city=location'
+```
+
+***Joke API***
+```bash
+curl --location 'http://localhost:8000/joke'
+```
+***Summary API***
+```bash
+curl --location 'http://localhost:8000/summary' \
+--header 'accept: application/json' \
+--header 'Content-Type: application/json' \
+--header 'X-API-Key: get-from-env' \
+--data '{
+    "text": "text"
+}'
+```
+
+## Swagger and Redoc
+
+***Swagger*** : 
+http://localhost:8000/docs#/
+
+***Redoc*** : 
+http://localhost:8000/redoc
